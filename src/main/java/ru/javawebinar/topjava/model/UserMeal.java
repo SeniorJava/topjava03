@@ -1,21 +1,26 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
  * GKislin
  * 11.01.2015.
  */
+@Entity
+@Table(name = "MEALS")
 public class UserMeal extends BaseEntity{
+    @Column(name = "time", columnDefinition = "timestamp default now()")
     protected LocalDateTime dateTime;
 
+    @Column(name = "description")
     protected String description;
 
+    @Column(name = "calories")
     protected int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
     public UserMeal() {
