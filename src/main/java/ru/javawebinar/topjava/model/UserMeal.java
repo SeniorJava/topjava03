@@ -9,7 +9,22 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "MEALS")
+@NamedQueries({
+        @NamedQuery(name = UserMeal.DELETE, query = "DELETE FROM UserMeal m WHERE m.id=:id AND m.user.id=:userId"),
+        @NamedQuery(name = UserMeal.ALL_SORTED, query = "SELECT m FROM UserMeal m WHERE m.user.id=:userId"),
+        @NamedQuery(name = UserMeal.DELETE_ALL, query = "DELETE FROM UserMeal m WHERE m.user.id=:userId"),
+        @NamedQuery(name = UserMeal.GET, query ="SELECT m FROM UserMeal m WHERE m.id=:id AND m.user.id=:userId" ),
+        @NamedQuery(name = UserMeal.GET_BETWEEN, query = "SELECT m FROM UserMeal m WHERE m.user.id=:userId AND" +
+                "  m.dateTime<:before AND m.dateTime>:after")
+})
 public class UserMeal extends BaseEntity{
+
+    public static final String DELETE = "UserMeal.delete";
+    public static final String GET = "UserMeal.get";
+    public static final String ALL_SORTED = "UserMeal.allSorted";
+    public static final String DELETE_ALL = "UserMeal.deleteAll";
+    public static final String GET_BETWEEN = "UserMeal.getBetween";
+
     @Column(name = "time", columnDefinition = "timestamp default now()")
     protected LocalDateTime dateTime;
 
